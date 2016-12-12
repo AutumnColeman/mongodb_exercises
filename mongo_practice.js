@@ -122,6 +122,7 @@ db.my_database.find({inventors: 'Simon Peyton Jones'}).pretty()
 
 //10. Find all object-oriented programming languages created in the 90s.
 db.my_database.find({
+  paradigms: /object-oriented.*/i,
   $and: [
     {
       firstAppeared: { $gt: '1989'}
@@ -184,3 +185,44 @@ var haskell = {
     'inferred'
   ]
 };
+db.my_database.update({
+  _id: ObjectId("584ece644f3548cf68cbb38e")
+}, haskell);
+
+//Patching javascript
+var javascript = {
+  inventors: 'Brendan Eich'
+};
+db.my_database.update({
+  _id: ObjectId("584ecc484f3548cf68cbb38c")
+}, {
+  $set: javascript
+});
+
+//Patching clojure (variable name not changed)
+var closure = {
+  language: 'Clojure'
+};
+db.my_database.update({
+  _id: ObjectId("584eceb54f3548cf68cbb38f")
+}, {
+  $set: closure
+});
+
+//Upsert
+var elm = {
+  inventors: 'Evan Czaplicki',
+  firstAppeared: '2012',
+  typingDiscipline: [
+    'static',
+    'strong',
+    'inferred'
+  ]
+};
+db.my_database.update({
+  language: 'Elm'
+}, {
+  $set: elm
+}, {
+  upsert: true
+});
