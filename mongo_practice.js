@@ -104,3 +104,83 @@ db.my_database.find({paradigms: 'functional'}).pretty()
 
 //4. Find all programming languages that have "duck-typing".
 db.my_database.find({typingDiscipline: 'duck'}).pretty()
+
+//5. Find all programming languages that have static-typing.
+db.my_database.find({typingDiscipline: 'static'}).pretty()
+
+//6. Find all programming languages with strong-typing.
+db.my_database.find({typingDiscipline: 'strong'}).pretty()
+
+//7. Find programming languages that are more that are more than 10 years old.
+db.my_database.find({firstAppeared: { $lt:'2006'} }).pretty()
+
+//8. Find a programming language by name.
+db.my_database.find({language: 'Euphoria'}).pretty()
+
+//9. Find all programming languages invented by Simon Peyton Jones.
+db.my_database.find({inventors: 'Simon Peyton Jones'}).pretty()
+
+//10. Find all object-oriented programming languages created in the 90s.
+db.my_database.find({
+  $and: [
+    {
+      firstAppeared: { $gt: '1989'}
+    },
+    {
+      firstAppeared: { $lt: '2000'}
+    }
+  ]
+}).pretty()
+
+//11. Find all object-oriented programming languages that use duck-typing.
+db.my_database.find({paradigms: /object-oriented.*/i, typingDiscipline: 'duck'}).pretty()
+
+//12. Find all functional programming languages that are also object-oriented.
+db.my_database.find({
+  $and: [
+    {
+      paradigms: 'functional',
+    },
+    {
+      paradigms: /object-oriented.*/i
+    }
+  ]
+}).pretty()
+
+//Update Haskell
+var haskell = {
+  language: 'Haskell',
+  inventors: [
+    'Simon Peyton Jones',
+    'Lennart Augustsson',
+    'Dave Barton',
+    'Brian Boutel',
+    'Warren Burton',
+    'Joseph Fasel',
+    'Kevin Hammond',
+    'Ralf Hinze',
+    'Paul Hudak',
+    'John Hughes',
+    'Thomas Johnsson',
+    'Mark Jones',
+    'Simon Peyton Jones',
+    'John Launchbury',
+    'Erik Meijer',
+    'John Peterson',
+    'Alastair Reid',
+    'Colin Runciman',
+    'Philip Wadler'
+  ],
+  firstAppeared: '1990',
+  paradigms: [
+    'functional',
+    'imperative',
+    'lazy/non-strict',
+    'modular'
+  ],
+  typingDiscipline: [
+    'static',
+    'strong',
+    'inferred'
+  ]
+};
